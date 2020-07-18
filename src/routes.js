@@ -5,6 +5,6 @@ import PhotoDetail from "./components/PhotoDetail.vue";
 export const routes = [
   { path: "", component: Albums },
   { path: "/albums", component: Albums },
-  { path: "/albums/:id", component: Photos },
+  { path: "/albums/:id", component: Photos, name: "photos" },
   { path: "photo-detail", component: PhotoDetail }
 ];

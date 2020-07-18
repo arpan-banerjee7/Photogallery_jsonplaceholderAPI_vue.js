@@ -5,17 +5,7 @@
       <hr />
       <div class="albums">
         <ul class="list-group">
-          <li class="list-group-item" v-for="album in albumsList" :key="album.id">
-            <div class="albums__title">
-              Title ►
-              <span>{{album.title}}</span>
-            </div>
-            <br />
-            <div class="albums__username">
-              User Name:
-              <span>{{album.userName}}</span>
-            </div>
-          </li>
+          <app-album-details v-for="album in albumsList" :album="album" :key="album.id"></app-album-details>
         </ul>
       </div>
     </div>
@@ -23,7 +13,11 @@
 </template>
 
 <script>
+import AlbumDetail from "./AlbumDetail";
 export default {
+  components: {
+    "app-album-details": AlbumDetail
+  },
   data() {
     return {
       albumsList: []
@@ -35,40 +29,24 @@ export default {
       .then(response => response.json())
       .then(albums => {
         albums.forEach(album => {
+          let albumObj = {};
           this.$http
             .get("users?id=" + album.userId)
             .then(response => response.json())
             .then(user => {
-              let albumObj = {};
-              albumObj.id = album.id;
-              albumObj.userId = album.userId;
-              albumObj.title = album.title;
+              //console.log(user);
               albumObj.userName = user[0].username;
               console.log(albumObj);
               this.albumsList.push(albumObj);
             });
+          albumObj.id = album.id;
+          albumObj.title = album.title;
+          albumObj.userId = album.userId;
         });
-        console.log(this.albumsList);
       });
   }
 };
 </script>
 
 <style scoped>
-.albums li {
-  cursor: pointer;
-}
-.albums__title {
-  font-family: "Lato", sans-serif;
-}
-.albums__username span {
-  font-family: "Ranchers", cursive, sans-serif;
-  font-size: 120%;
-}
-.albums__title span {
-  font-weight: bold;
-  font-family: "Modak", cursive, Sans-Serif;
-  color: rgba(248, 125, 125, 0.842);
-  font-size: 140%;
-}
 </style>
