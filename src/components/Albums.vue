@@ -26,22 +26,29 @@ export default {
   created() {
     this.$http
       .get("albums")
-      .then(response => response.json())
+      .then(response => {
+        return response.json();
+      })
       .then(albums => {
         albums.forEach(album => {
-          let albumObj = {};
-          this.$http
-            .get("users?id=" + album.userId)
-            .then(response => response.json())
-            .then(user => {
-              //console.log(user);
-              albumObj.userName = user[0].username;
-              console.log(albumObj);
-              this.albumsList.push(albumObj);
-            });
-          albumObj.id = album.id;
-          albumObj.title = album.title;
-          albumObj.userId = album.userId;
+          // console.log(album);
+          let albumObj = { [album.id]: album };
+          //console.log(albumObj);
+          this.albumsList.push(albumObj);
+        });
+        console.log(this.albumsList);
+        this.albumsList.forEach(album => {
+          console.log(album);
+          Object.keys(album).forEach(key => {
+            console.log(album[key].userId);
+            this.$http
+              .get("users/" + album[key].userId)
+              .then(result => result.json())
+              .then(user => {
+                album[key].userName = user.username;
+                console.log(album[key]);
+              });
+          });
         });
       });
   }
