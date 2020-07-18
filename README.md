@@ -1,6 +1,12 @@
 # vue.js_photogallery_project
 
-> Vue.js resource usage with https://jsonplaceholder.typecode.com
+## Vue.js vue-resource usage with http://jsonplaceholder.typicode.com/
+
+### API used-
+1. http://jsonplaceholder.typicode.com/albums
+2. https://jsonplaceholder.typicode.com/photos
+3. http://jsonplaceholder.typicode.com/users
+
 
 ## Build Setup
 
