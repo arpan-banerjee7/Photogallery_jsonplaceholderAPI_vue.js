@@ -4,8 +4,9 @@
       <h1 style="text-align:center">Albums and Users</h1>
       <hr />
       <div class="albums">
+        {{albumsList.length}}--{{arr.length}}
         <ul class="list-group">
-          <app-album-details v-for="album in albumsList" :album="album" :key="album.id"></app-album-details>
+          <app-album-details v-for="album in arr" :album="album" :key="album.id"></app-album-details>
         </ul>
       </div>
     </div>
@@ -20,7 +21,8 @@ export default {
   },
   data() {
     return {
-      albumsList: []
+      albumsList: [],
+      arr: []
     };
   },
   created() {
@@ -31,25 +33,27 @@ export default {
       })
       .then(albums => {
         albums.forEach(album => {
-          // console.log(album);
+          //console.log(album);
           let albumObj = { [album.id]: album };
           //console.log(albumObj);
           this.albumsList.push(albumObj);
         });
-        console.log(this.albumsList);
+        //console.log(this.albumsList);
         this.albumsList.forEach(album => {
-          console.log(album);
+          //console.log(album);
           Object.keys(album).forEach(key => {
-            console.log(album[key].userId);
+            //console.log(album[key].userId);
             this.$http
               .get("users/" + album[key].userId)
               .then(result => result.json())
               .then(user => {
                 album[key].userName = user.username;
-                console.log(album[key]);
+                //console.log(album[key]);
+                this.arr.push({ ...album[key] });
               });
           });
         });
+        console.log(this.arr);
       });
   }
 };
