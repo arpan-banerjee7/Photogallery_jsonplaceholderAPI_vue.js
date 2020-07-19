@@ -1,12 +1,13 @@
 <template>
   <div class="row justify-content-center">
     <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-10 col-md-offset-1">
-      <h1 style="text-align:center">Albums and Users</h1>
+      <h1>Albums and Users</h1>
       <hr />
       <div class="albums">
-        {{albumsList.length}}--{{arr.length}}
         <ul class="list-group">
-          <app-album-details v-for="album in arr" :album="album" :key="album.id"></app-album-details>
+          <transition-group name="fade">
+            <app-album-details v-for="album in arr" :album="album" :key="album.id"></app-album-details>
+          </transition-group>
         </ul>
       </div>
     </div>
@@ -60,4 +61,21 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+  text-align: center;
+  color: rgba(17, 16, 16, 0.836);
+  font-family: "Lato", sans-serif;
+}
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  transition: opacity 1s;
+}
+
+.fade-leave-active {
+  transition: opacity 1s;
+  opacity: 0;
+}
 </style>
